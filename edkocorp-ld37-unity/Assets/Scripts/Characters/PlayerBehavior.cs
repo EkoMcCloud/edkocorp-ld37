@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerBehavior : CharacterBehavior {
 
 	// Use this for initialization
-	void Start () {
-		
+	protected void Start () {
+        base.Start();
 	}
 	
 	// Update is called once per frame
@@ -15,9 +15,6 @@ public class PlayerBehavior : CharacterBehavior {
         int horizontal = (int)Input.GetAxisRaw("Horizontal");
         int vertical = (int)Input.GetAxisRaw("Vertical");
 
-        if (horizontal != 0 || vertical != 0)
-        {
-            Move(horizontal, vertical);
-        }
+        Move(horizontal, vertical);
     }
 }

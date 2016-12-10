@@ -10,7 +10,7 @@ public class CharacterBehavior : MonoBehaviour {
     public float speed = 1f;
 
 	// Use this for initialization
-	protected void Start ()
+	protected virtual void Start ()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
@@ -18,8 +18,8 @@ public class CharacterBehavior : MonoBehaviour {
 
     protected void Move(int xDir, int yDir)
     {
-        Debug.Log("@@" + rb2D.ToString());
-        rb2D.transform.position += new Vector3(xDir * speed, yDir * speed);
+        //rb2D.transform.position += new Vector3(xDir * speed, yDir * speed);
+        rb2D.velocity = new Vector2(xDir * speed, yDir * speed);
     }
 	
 }
