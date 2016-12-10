@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c77d211d8a7a8184fbee774e022c2808
+timeCreated: 1481373998
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Pixel-Noir Caps
+  fontNames:
+  - Pixel-Noir Caps
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

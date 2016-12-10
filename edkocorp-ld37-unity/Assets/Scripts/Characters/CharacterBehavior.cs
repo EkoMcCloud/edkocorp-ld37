@@ -17,7 +17,7 @@ public class CharacterBehavior : MonoBehaviour {
         rb2D = GetComponent<Rigidbody2D>();
 	}
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (hp <= 0)
             OnDie();
@@ -26,6 +26,23 @@ public class CharacterBehavior : MonoBehaviour {
     protected void OnDie()
     {
         gameObject.SetActive(false);
+    }
+
+    protected void LookAt(float xPos, float yPos)
+    {
+
+        /*Debug.Log("x: " + xPos);
+        Debug.Log("y: " + yPos);
+
+        Debug.Log("pos x: " + transform.position.x);
+        Debug.Log("pos y: " + transform.position.y);*/
+
+        float angleRad = Mathf.Atan2(yPos - transform.position.y, xPos - transform.position.x);
+        float angleDeg = (180 / Mathf.PI) * angleRad;
+
+        angleDeg += -90;
+
+        this.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
     }
 
     protected void Move(int xDir, int yDir)
