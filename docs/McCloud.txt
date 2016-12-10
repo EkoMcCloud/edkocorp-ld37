@@ -1,0 +1,48 @@
+- Roguelike
+- Avancement niveau par niveau
+- Upgrades restent d'une partie à l'autre
+- Marchands avec level
+- Randomizer d'armes
+- A chaque boss, possibilité faible de looter une arme supérieur aux armes vendues
+- Possibilité d'upgrade => armes/ennemis (plus de loots)/taille de la salle/tourelles/vitesse de jeu?
+
+
+EnnemySpawner
+- GameObject[] ennemies
+- minDelay:float;
+- maxDelay:float;
+
+Weapon (GameObject)
+- cooldownDelay:float //ms
+- cooldownRunning:Bool;
+- bullet:GameObject
+//opt
+//- ammoPerLoader:int = -1;
+//- reloadDelay:int = 0;
+//super opt
+//- magazineCurrent:int
+//- magazineMax:int
+
+protected void Fire(startingPos:Vector2, direction:Vector2)
+{
+//create GameObject bullet
+}
+
+Bullet (GameObject boxCollider 1px/trigger, pas de rigidBody)
+- direction:Vector2
+- speed:float //??lol
+- damage:int = 1;
+
+OnUpdate()
+{
+//move toward direction
+}
+
+OnCollide()
+{
+//check wall => self destroy
+//check ennemu => hpLoss + self destroy
+}
+
+//
+WeaponTurrent (fixed weapon on ground)
