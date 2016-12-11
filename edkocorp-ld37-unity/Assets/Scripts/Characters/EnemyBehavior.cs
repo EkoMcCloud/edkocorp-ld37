@@ -70,7 +70,7 @@ public class EnemyBehavior : CharacterBehavior {
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "Player") //TODO ADD DAMAGE ON TRIGGER STAY sinon immune
         {
             PlayerBehavior player = collision.gameObject.GetComponent<PlayerBehavior>();
             //hpLoss

@@ -6,11 +6,8 @@
 - A chaque boss, possibilité faible de looter une arme supérieur aux armes vendues
 - Possibilité d'upgrade => armes/ennemis (plus de loots)/taille de la salle/tourelles/vitesse de jeu?
 
-
-
-Bullet (GameObject boxCollider 1px/trigger, pas de rigidBody)
-
-
+//TODO
+=> Orienter balles vers destination
 
 
 
