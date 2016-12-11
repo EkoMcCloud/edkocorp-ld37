@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour {
     public GameObject[] enemies;
     public float minDelay = 5f;
     public float maxDelay = 10f;
+    //TODO Rajouter quantité max de mob, decrementer iterateur a chaque pop jusqu'a 0 puis autodestruction
 
 	// Use this for initialization
 	void Start ()

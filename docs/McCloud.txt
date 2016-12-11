@@ -7,26 +7,6 @@
 - Possibilité d'upgrade => armes/ennemis (plus de loots)/taille de la salle/tourelles/vitesse de jeu?
 
 
-EnnemySpawner
-- GameObject[] ennemies
-- minDelay:float;
-- maxDelay:float;
-
-Weapon (GameObject)
-- cooldownDelay:float //ms
-- cooldownRunning:Bool;
-- bullet:GameObject
-//opt
-//- ammoPerLoader:int = -1;
-//- reloadDelay:int = 0;
-//super opt
-//- magazineCurrent:int
-//- magazineMax:int
-
-protected void Fire(startingPos:Vector2, direction:Vector2)
-{
-//create GameObject bullet
-}
 
 Bullet (GameObject boxCollider 1px/trigger, pas de rigidBody)
 - direction:Vector2

@@ -11,6 +11,8 @@ public class BoardManager : MonoBehaviour {
 
     public GameObject[] spawners;
 
+    private int nbSpawners = 3;
+
     private int columns = 15;
     private int rows = 10;
 
@@ -86,8 +88,11 @@ public class BoardManager : MonoBehaviour {
             }
         }
 
-        GameObject spawner = Instantiate(RandomGameObject(spawners), RandomPosition(), Quaternion.identity) as GameObject;
-        spawner.transform.SetParent(boardHolder);
+        for(int i = 0; i < nbSpawners; i++)
+        {
+            GameObject spawner = Instantiate(RandomGameObject(spawners), RandomPosition(), Quaternion.identity) as GameObject;
+            spawner.transform.SetParent(boardHolder);
+        }
     }
 
     private GameObject RandomGameObject(GameObject[] gameObjects)

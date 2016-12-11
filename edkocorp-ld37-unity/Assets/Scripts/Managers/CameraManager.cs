@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour {
 
+    //TODO rajouter public GameObject target et virer l'accès direct à player + remplacer followPlayer par followTarget
+    public bool followPlayer = true;
+
     public static CameraManager instance;
 
 	// Use this for initialization
@@ -18,11 +21,16 @@ public class CameraManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void LateUpdate () {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null)
+
+        if(followPlayer)
         {
-            Vector2 playerPosition = player.transform.position;
-            transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                //TODO rajouter move "smooth" pour deplacement lissé
+                Vector2 playerPosition = player.transform.position;
+                transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+            }
         }
 	}
 }
