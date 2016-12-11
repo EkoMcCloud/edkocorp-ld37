@@ -22,7 +22,14 @@ public class BulletBehavior : MonoBehaviour
         this.direction = direction;
 
         transform.localScale = new Vector2(transform.localScale.x*BUFF, transform.localScale.y*BUFF);
-	}
+        //transform.rotation = Quaternion.LookRotation(direction);
+        float angleRad = Mathf.Atan2(direction.y, direction.x);
+        float angleDeg = (180 / Mathf.PI) * angleRad;
+
+        //angleDeg += -90;
+
+        this.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
+    }
 	
 	// Update is called once per frame
 	protected void Update ()

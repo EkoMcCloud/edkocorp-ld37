@@ -88,7 +88,7 @@ public class CharacterBehavior : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    protected void LookAt(float xPos, float yPos)
+    protected virtual void LookAt(float xPos, float yPos)
     {
 
         /*Debug.Log("x: " + xPos);
