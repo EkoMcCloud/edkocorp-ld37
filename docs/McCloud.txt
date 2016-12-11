@@ -9,20 +9,10 @@
 
 
 Bullet (GameObject boxCollider 1px/trigger, pas de rigidBody)
-- direction:Vector2
-- speed:float //??lol
-- damage:int = 1;
 
-OnUpdate()
-{
-//move toward direction
-}
 
-OnCollide()
-{
-//check wall => self destroy
-//check ennemu => hpLoss + self destroy
-}
+
+
 
 //
 WeaponTurrent (fixed weapon on ground)

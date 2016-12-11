@@ -11,6 +11,8 @@ public class BulletBehavior : MonoBehaviour
     protected GameObject shooter;
     protected Vector2 direction;
 
+    protected static int BUFF = 10;
+
     //rajouter time to live pour auto destruction ?
     
 	// Use this for initialization
@@ -18,6 +20,8 @@ public class BulletBehavior : MonoBehaviour
     {
         this.shooter = shooter;
         this.direction = direction;
+
+        transform.localScale = new Vector2(transform.localScale.x*BUFF, transform.localScale.y*BUFF);
 	}
 	
 	// Update is called once per frame
@@ -27,10 +31,12 @@ public class BulletBehavior : MonoBehaviour
         //on normalize le vecteur de direction
         Vector2 move = direction.normalized * speed * Time.deltaTime;
         transform.position += new Vector3(move.x, move.y, 0.0f);
+
+        
         //Rotate transform pour direction de balle
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Wall")
         {
@@ -39,17 +45,17 @@ public class BulletBehavior : MonoBehaviour
         else if (collision.tag == "Enemy" || collision.tag == "Player") //pour friendly fire
         {
             //immune owner
-            if(collision.gameObject.GetInstanceID() != shooter.GetInstanceID())
+            if(shooter == null || collision.gameObject.GetInstanceID() != shooter.GetInstanceID())
             {
                 CharacterBehavior character = collision.gameObject.GetComponent<CharacterBehavior>();
                 //hpLoss + self destroy
-                if (character.Damage(damage))
+                if (character != null && character.Damage(damage * BUFF))
                     SelfDestruct();
             }
         }
     }
 
-    private void SelfDestruct()
+    protected void SelfDestruct()
     {
         //gameObject.SetActive(false); //+self destroy
         Destroy(this.gameObject); 

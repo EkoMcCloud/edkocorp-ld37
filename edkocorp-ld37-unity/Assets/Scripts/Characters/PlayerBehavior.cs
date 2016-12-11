@@ -17,31 +17,33 @@ public class PlayerBehavior : CharacterBehavior {
     {
         base.Update();
 
-        int horizontal = (int) Input.GetAxisRaw("Horizontal");
-        int vertical = (int) Input.GetAxisRaw("Vertical");
-
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-
-        Move(horizontal, vertical);
-        LookAt(mousePos.x, mousePos.y);
-
-        if (Input.GetMouseButton(0)) //PRESSED
+        if(IsAlive())
         {
-            Debug.Log("Pressed left.");
-            if(weapon != null)
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+
+            Move(horizontal, vertical);
+            LookAt(mousePos.x, mousePos.y);
+
+            if (Input.GetMouseButton(0)) //PRESSED
             {
-                WeaponBehavior weaponScript = weapon.GetComponent<WeaponBehavior>();
-                Vector2 position = new Vector2(transform.position.x, transform.position.y);
-                Vector2 direction = mousePos - position;
-                weaponScript.Fire(this.gameObject, direction);
+                Debug.Log("Pressed left.");
+                if (weapon != null)
+                {
+                    WeaponBehavior weaponScript = weapon.GetComponent<WeaponBehavior>();
+                    Vector2 position = new Vector2(transform.position.x, transform.position.y);
+                    Vector2 direction = mousePos - position;
+                    weaponScript.Fire(this.gameObject, direction);
+                }
             }
+
+            if (Input.GetMouseButtonDown(1)) //CLICK
+                Debug.Log("Clicked right. ROULAAAAAADE");
+
+            /*if (Input.GetMouseButtonDown(2))
+                Debug.Log("Clicked middle.");*/
         }
-
-        if (Input.GetMouseButtonDown(1)) //CLICK
-            Debug.Log("Clicked right. ROULAAAAAADE");
-
-        /*if (Input.GetMouseButtonDown(2))
-            Debug.Log("Clicked middle.");*/
-
     }
 }
