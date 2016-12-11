@@ -9,9 +9,12 @@ public class EnemySpawner : MonoBehaviour {
     public float maxDelay = 10f;
     //TODO Rajouter quantité max de mob, decrementer iterateur a chaque pop jusqu'a 0 puis autodestruction
 
+    private Animator animator;
+
 	// Use this for initialization
 	void Start ()
     {
+        animator = GetComponent<Animator>();
         InvokeNextSpawn();
 	}
 
@@ -27,6 +30,7 @@ public class EnemySpawner : MonoBehaviour {
         GameObject instance = Instantiate(toInstantiate, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity) as GameObject;
 
         instance.transform.SetParent(GameManager.instance.boardManager.boardHolder);
+        animator.SetTrigger("Pop");
         InvokeNextSpawn();
     }
 

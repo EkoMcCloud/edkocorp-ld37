@@ -30,18 +30,26 @@ public class PlayerBehavior : CharacterBehavior {
 
             Move(horizontal, vertical);
             LookAt(mousePos.x, mousePos.y);
-
-            if (Input.GetMouseButton(0)) //PRESSED
+            
+            if (weapon != null)
             {
-                //Debug.Log("Pressed left.");
-                if (weapon != null)
+                WeaponBehavior weaponScript = weapon.GetComponent<WeaponBehavior>();
+                //TODO ajouter controls manager pour switch clavier/sourie (lastInput = clavier OU stick)
+                Vector2 position = new Vector2(transform.position.x, transform.position.y);
+                Vector2 direction;
+                if (Input.GetMouseButton(0)) //PRESSED
                 {
-                    WeaponBehavior weaponScript = weapon.GetComponent<WeaponBehavior>();
-                    Vector2 position = new Vector2(transform.position.x, transform.position.y);
-                    Vector2 direction = mousePos - position;
+                    //Debug.Log("Pressed left.");
+                    direction = mousePos - position;
                     weaponScript.Fire(this.gameObject, direction);
                 }
-            }
+                else
+                {
+                    direction = new Vector2(Input.GetAxis("RightStickX"), Input.GetAxis("RightStickY"));
+                    if(direction.magnitude > 0)
+                        weaponScript.Fire(this.gameObject, direction);
+                }
+            }            
 
             if (Input.GetMouseButtonDown(1)) //CLICK
                 Debug.Log("Clicked right. ROULAAAAAADE");

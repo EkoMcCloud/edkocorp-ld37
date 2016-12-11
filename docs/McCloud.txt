@@ -1,15 +1,36 @@
 - Roguelike
 - Avancement niveau par niveau
 - Upgrades restent d'une partie à l'autre
-- Marchands avec level
+- Marchands avec level ?
 - Randomizer d'armes
 - A chaque boss, possibilité faible de looter une arme supérieur aux armes vendues
 - Possibilité d'upgrade => armes/ennemis (plus de loots)/taille de la salle/tourelles/vitesse de jeu?
 
-//TODO
-=> Orienter balles vers destination
+//Feature
+- ActionSkill.IntensifyMod() => mode rage, boost speed, damage, shot speed ? => EPIC MUSIC => Anim glow sur les decors de la salle
+- Level.OnClearFloor() => ajout zone de sortie, reset progressif de la salle, pixel par pixel + reinit
 
+//TODO Dev
+=> Joystick LookAt
+=> Boss management (limiter nombre de pop par spawn, pop de boss en dernier puis autodestruction)
+=> Bullet asset
+=> Rage management (each kill => +1, si kills = 10, mode rage => speed, damage, shoot speed)
+=> Placer geometriquement le perso et les spawners en fontion du nb de spawner et de la taille de la salle
 
+//TODO Gestion
+=> Conception ennemis
+=> Conception zone outDoor + marchands
+=> Conception armes/balles/tir
+=> Conception inventaire/stats management
+=> Conception histoire
+=> Conception curves de bonus
 
-//
+//Idées Gameplay
 WeaponTurrent (fixed weapon on ground)
+Ajouter elements/resists associées ?
+
+//Idées bonus
+Vague:
+Plus de pop, plus d'ennemis par vague/round, pop simultané, pop plus rapide, plus de rage/xp par kill, room size
+Player/ennemis :
+HP, speed, damage, fire rate, projectile size, reload, munition

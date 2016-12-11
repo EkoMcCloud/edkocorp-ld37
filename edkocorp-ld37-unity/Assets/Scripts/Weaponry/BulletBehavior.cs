@@ -11,7 +11,7 @@ public class BulletBehavior : MonoBehaviour
     protected GameObject shooter;
     protected Vector2 direction;
 
-    protected static int BUFF = 10;
+    protected static int BUFF = 1;
 
     //rajouter time to live pour auto destruction ?
     
