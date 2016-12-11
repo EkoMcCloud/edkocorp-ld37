@@ -5,9 +5,13 @@ using UnityEngine;
 public class CharacterBehavior : MonoBehaviour {
 
     public float speed = 1f;
-    public int hp = 1;
+    public int maxHP = 1; //uniquement sur enemie & player ? pnj ?
+    public float damageCooldown = 0f; //a mettre uniquement sur player ?
 
-    private BoxCollider2D boxCollider;
+    protected int currentHP;
+    protected bool vulnerable = true; //a mettre uniquement sur player ?
+
+    protected BoxCollider2D boxCollider;
     private Rigidbody2D rb2D;
 
 	// Use this for initialization
@@ -15,12 +19,43 @@ public class CharacterBehavior : MonoBehaviour {
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
-	}
+
+        currentHP = maxHP;
+
+    }
 
     protected virtual void Update()
     {
-        if (hp <= 0)
+        if (currentHP <= 0)
             OnDie();
+    }
+
+    public bool Damage(int damage)
+    {
+        bool damaged = false;
+        if(vulnerable && currentHP > 0)
+        {
+            currentHP -= damage;
+            damaged = true;
+        }
+
+        return damaged;
+    }
+
+    public bool Heal(int heal)
+    {
+        bool healed = false;
+        if(currentHP < maxHP)
+        {
+            if(currentHP + heal > maxHP)
+                currentHP = maxHP;
+            else
+                maxHP += heal;
+
+            healed = true;
+        }
+
+        return healed;
     }
 
     protected void OnDie()
