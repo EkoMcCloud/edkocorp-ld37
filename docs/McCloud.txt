@@ -6,9 +6,20 @@
 - A chaque boss, possibilité faible de looter une arme supérieur aux armes vendues
 - Possibilité d'upgrade => armes/ennemis (plus de loots)/taille de la salle/tourelles/vitesse de jeu?
 
+//Graphs
+- Regarder taille des tiles de jeux 2D stylés pour comparaison
+
 //Feature
 - ActionSkill.IntensifyMod() => mode rage, boost speed, damage, shot speed ? => EPIC MUSIC => Anim glow sur les decors de la salle
 - Level.OnClearFloor() => ajout zone de sortie, reset progressif de la salle, pixel par pixel + reinit
+
+//TODO LD
+- Rajouter nombre de pop max sur Spawners, decrementer, a la fin pop Enemy2, selfDestroy, si plus de spawner (check boardmanager), clean + reload lvl suivant, regen, ajouter un spawner au nombre general loop, (replacer joueur)
+- Creer Enemy2 (sprite deja faite, barder PV/damage)
+- Rajouter menu pause Time.timeScale = 0 ? (tween sur prop = effet cool)
+- Rajouter des sons
+- Rajouter interface PV/Stamina
+- Rajouter roulade
 
 //TODO Dev
 => Joystick LookAt
@@ -16,21 +27,63 @@
 => Bullet asset
 => Rage management (each kill => +1, si kills = 10, mode rage => speed, damage, shoot speed)
 => Placer geometriquement le perso et les spawners en fontion du nb de spawner et de la taille de la salle
+=> Rajouter namespace/dossier + Namespace de base globale
+=> Rajouter classes statiques pour stocker les string unity (Tags, prop d'anim etc).
+=> Rajouter autodestruct sur les balles
 
 //TODO Gestion
-=> Conception ennemis
+=> Conception ennemis/boss
 => Conception zone outDoor + marchands
 => Conception armes/balles/tir
 => Conception inventaire/stats management
 => Conception histoire
-=> Conception curves de bonus
+=> Conception curves de bonus/etats
+
+//Idées dev
+Rajouter surcouche singleton InputManager ? bool LastControl pad/keyboard, pour afficher les bons layout (accessible depuis l'exterieur)
+Class Damageable => super parent pour turrent/spawn/player/pnj (takedamage => return false)/ennemies
+LivingBehavior vs. MovingBehavior ? (Interfaces ?)
 
 //Idées Gameplay
-WeaponTurrent (fixed weapon on ground)
-Ajouter elements/resists associées ?
+WeaponTurrent (fixed weapon on ground) 
+Ajouter elements/resists associées ? (associer gameobject element à une balle, gestion de la sprite et du dot)
+Bullet avec target associées, suit la cible
+Arme qui permet de marquer tout ceux qui entrent en colision avec un ray, envoi 2/3 balles teleguides par tir
+Arme chargeable
+Systeme d'aoe style guiwar?
+
+//Idées globales
+Mode 3D, descend les lunettes, ajouter filtre => 1 px rouge alpha50% left+top, 1 px vert alpha50% right+bottom
+Bonus qui ralenti le temps
+Ajouter pouvoirs ?
+Ajouter des loots
+Rajouter un manager de donjon (enchainer les salles, creer des niveaux complexes)
+Ennemie drop tune/xp/rage, directement sur joueur ou a ramasser ? (si ramassage, ajouter zone aimantée buffable sur joueur)
+Ajouter des musiques 90s épiques pour séquences
+Heros fat qui devient thin en mode 3D ?
+Scavengers des ruines de Manhattan, vaisseau craché au milieu de la ville, shops
+Ennemi qui court sur le player uniquement si player visible sans wall au milieu
+Utiliser jauge de HP plutot que unité 
+Trouver différents type d'ennemis puis ajouter version Normal Hard Deadly (nouveaux comportements pour version supérieurs => autres moves d'attaque dans le meme style, pathfinding plus efficace? changer set de couleurs) utiliser pattern plutot que chiffres pour ces boosts la
+Jouer avec size de la caméra (bonus ? en fonction de la taille de la salle courante ?)
+Bug qui ouvre des failles de vision sur le futur/passé ? => armes vues se rajoutent dans un pool de loots à venir
+Diff = couleur
+- Normal => vert-bleu
+- Hard => bleu
+- Deadly => violet
+- +Rouge+Blanc ?
+Marchands => ambiance futuriste à la deus ex, marchands = IA (tout le monde est mort, depuis longtemps), powers ups => upgrades cybersuit, armes => armes VR/cyber, à l'interieur du vaisseau, un pod pour se connecter, digitalize dans le donjon, les powers up fonctionnent car donjon = partie
+Arme fonctionne par module (module pour lazer/load etc. marquage/element/customizable)
+Rajouter layer "ombre" juste au dessus du layer "sol" pour pouvoir rajouter des GameObject "Ombre" sur les Players/ennemi/boss (tag ombre)
+
 
 //Idées bonus
 Vague:
 Plus de pop, plus d'ennemis par vague/round, pop simultané, pop plus rapide, plus de rage/xp par kill, room size
 Player/ennemis :
 HP, speed, damage, fire rate, projectile size, reload, munition
+
+//Orga
+- Reorganiser layers/tags
+- Reorganiser projet unity/uniformiser
+- Migration git (trouver nom lol)
