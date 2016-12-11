@@ -8,6 +8,8 @@ public class CharacterBehavior : MonoBehaviour {
     public int maxHP = 1; //uniquement sur enemie & player ? pnj ?
     public float damageCooldown = 0f; //a mettre uniquement sur player ?
 
+    protected Color bloodColor = new Color(1.0f, 0.0f, 0.0f, 0.3f);
+
     protected int currentHP;
     protected bool vulnerable = true; //a mettre uniquement sur player ?
 
@@ -19,24 +21,32 @@ public class CharacterBehavior : MonoBehaviour {
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
+        rb2D.freezeRotation = true;
 
         currentHP = maxHP;
 
     }
 
+    public bool IsAlive()
+    {
+        return currentHP > 0;
+    }
+
     protected virtual void Update()
     {
-        if (currentHP <= 0)
+        if (!IsAlive())
             OnDie();
     }
 
-    public bool Damage(int damage)
+    public virtual bool Damage(int damage)
     {
         bool damaged = false;
         if(vulnerable && currentHP > 0)
         {
             currentHP -= damage;
             damaged = true;
+
+            RenderDamage();
         }
 
         return damaged;
@@ -58,7 +68,22 @@ public class CharacterBehavior : MonoBehaviour {
         return healed;
     }
 
-    protected void OnDie()
+    protected void RenderDamage()
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = bloodColor;
+        float time = (damageCooldown != 0.0f) ? damageCooldown : 0.1f;
+
+        Invoke("ResetMaterialColor", time);
+    }
+
+    private void ResetMaterialColor()
+    {
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    protected virtual void OnDie()
     {
         gameObject.SetActive(false);
     }
@@ -72,18 +97,24 @@ public class CharacterBehavior : MonoBehaviour {
         Debug.Log("pos x: " + transform.position.x);
         Debug.Log("pos y: " + transform.position.y);*/
 
-        float angleRad = Mathf.Atan2(yPos - transform.position.y, xPos - transform.position.x);
+        /*float angleRad = Mathf.Atan2(yPos - transform.position.y, xPos - transform.position.x);
         float angleDeg = (180 / Mathf.PI) * angleRad;
 
         angleDeg += -90;
 
-        this.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
+        this.transform.rotation = Quaternion.Euler(0, 0, angleDeg);*/
     }
 
-    protected void Move(int xDir, int yDir)
+    protected void Move(float xDir, float yDir)
     {
         //rb2D.transform.position += new Vector3(xDir * speed, yDir * speed);
-        rb2D.velocity = new Vector2(xDir * speed, yDir * speed);
+        //rb2D.MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
+
+        Vector3 direction = new Vector3(xDir, yDir);
+        if (direction.magnitude > 1)
+            direction = direction.normalized; //prevent sliding and normalize max speed
+
+        rb2D.velocity = direction * speed * 60 * Time.deltaTime;
     }
 	
 }
