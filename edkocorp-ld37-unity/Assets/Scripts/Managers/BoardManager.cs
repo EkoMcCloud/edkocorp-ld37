@@ -11,18 +11,27 @@ public class BoardManager : MonoBehaviour {
 
     public GameObject[] spawners;
 
-    private int nbSpawners = 3;
+    private int currentLvl = 1;
+
+    private int nbSpawners;
 
     private int columns = 15;
     private int rows = 10;
 
     public Transform boardHolder { get; private set; }
+
     private List<Vector3> gridPositions = new List<Vector3>();
+    private GameObject player;
 
     public void SetupScene()
     {
         InitializeList();
         BoardSetup();
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = RandomPosition();
+        CameraManager.instance.FollowPlayer();
+
 
         //Instantiate(exit, new Vector3(columns - 1, rows - 1, 0), Quaternion.identity);
     }
@@ -88,6 +97,7 @@ public class BoardManager : MonoBehaviour {
             }
         }
 
+        nbSpawners = currentLvl;
         for(int i = 0; i < nbSpawners; i++)
         {
             GameObject spawner = Instantiate(RandomGameObject(spawners), RandomPosition(), Quaternion.identity) as GameObject;
@@ -118,6 +128,16 @@ public class BoardManager : MonoBehaviour {
             Vector3 randomPosition = RandomPosition();
             GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
             Instantiate(tileChoice, randomPosition, Quaternion.identity);
+        }
+    }
+
+    public void OnSpawnerDestroyed()
+    {
+        nbSpawners--;
+        if(nbSpawners == 0)
+        {
+            currentLvl++;
+            GameManager.instance.OnLevelClear();
         }
     }
 }

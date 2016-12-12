@@ -5,19 +5,50 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour {
 
     public GameObject[] enemies;
+    public GameObject[] bosses;
+
     public float minDelay = 5f;
     public float maxDelay = 10f;
-    //TODO Rajouter quantité max de mob, decrementer iterateur a chaque pop jusqu'a 0 puis autodestruction
+    public int nbSpawn = 1;
+    
+    private int nbMobs;
+    private List<GameObject> mobs;
 
     private Animator animator;
 
 	// Use this for initialization
-	void Start ()
+	protected void Start ()
     {
         animator = GetComponent<Animator>();
+        nbMobs = nbSpawn;
+        mobs = new List<GameObject>();
         InvokeNextSpawn();
 	}
 
+    protected void Update()
+    {
+        if(mobs.Count > 0 && nbMobs > 0)
+        {
+            for(var i =  0; i < mobs.Count; i++)
+            {
+                if (mobs[i] == null)
+                {
+                    Debug.Log("Killed lol");
+                    nbMobs--;
+                    mobs.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        if(nbMobs == 0)
+        {
+            //Remplacer par un stockage de l'objet dans le boardManager et verif d'existence depuis la bas (cf check mobs ici) pour decouplage de cet objet
+            GameManager.instance.boardManager.OnSpawnerDestroyed();
+            Destroy(this.gameObject);
+        }
+    }
+    
     protected void InvokeNextSpawn()
     {
         float delay = Random.Range(minDelay, maxDelay);
@@ -26,16 +57,37 @@ public class EnemySpawner : MonoBehaviour {
 
     protected void Spawn()
     {
-        GameObject toInstantiate = RandomEnemy();
-        GameObject instance = Instantiate(toInstantiate, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity) as GameObject;
+        if(nbSpawn > 0)
+        {
+            nbSpawn--;
+            Debug.Log("Spawn remaining:"+nbSpawn);
+            GameObject toInstantiate = (nbSpawn > 0) ? RandomEnemy() : RandomBoss();
+            GameObject instance = Instantiate(toInstantiate, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity) as GameObject;
 
-        instance.transform.SetParent(GameManager.instance.boardManager.boardHolder);
-        animator.SetTrigger("Pop");
-        InvokeNextSpawn();
+            mobs.Add(instance);
+
+            instance.transform.SetParent(GameManager.instance.boardManager.boardHolder);
+            animator.SetTrigger("Pop");
+            InvokeNextSpawn();
+        }
     }
 
     protected GameObject RandomEnemy()
     {
+        Debug.Log("RandomEnemy");
         return enemies[Random.Range(0, enemies.Length)];
+    }
+
+    protected GameObject RandomBoss()
+    {
+        Debug.Log("RandomBoss");
+        GameObject boss;
+
+        if (bosses != null && bosses.Length != 0)
+            boss = bosses[Random.Range(0, bosses.Length)];
+        else
+            boss = RandomEnemy();
+
+        return boss;
     }
 }

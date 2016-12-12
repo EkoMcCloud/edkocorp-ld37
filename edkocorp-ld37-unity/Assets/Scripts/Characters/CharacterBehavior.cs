@@ -21,7 +21,8 @@ public class CharacterBehavior : MonoBehaviour {
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
-        rb2D.freezeRotation = true;
+        if(rb2D != null)
+            rb2D.freezeRotation = true;
 
         currentHP = maxHP;
 
@@ -86,6 +87,7 @@ public class CharacterBehavior : MonoBehaviour {
     protected virtual void OnDie()
     {
         gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 
     protected virtual void LookAt(float xPos, float yPos)
@@ -110,11 +112,14 @@ public class CharacterBehavior : MonoBehaviour {
         //rb2D.transform.position += new Vector3(xDir * speed, yDir * speed);
         //rb2D.MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
 
-        Vector3 direction = new Vector3(xDir, yDir);
-        if (direction.magnitude > 1)
-            direction = direction.normalized; //prevent sliding and normalize max speed
+        if(rb2D != null)
+        {
+            Vector3 direction = new Vector3(xDir, yDir);
+            if (direction.magnitude > 1)
+                direction = direction.normalized; //prevent sliding and normalize max speed
 
-        rb2D.velocity = direction * speed * 60 * Time.deltaTime;
+            rb2D.velocity = direction * speed * 60 * Time.deltaTime;
+        }
     }
 	
 }

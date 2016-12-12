@@ -21,12 +21,18 @@ public class CameraManager : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-        FollowPlayer();
+        //FollowPlayer();
     }
 
     public void FollowPlayer()
     {
         target = GameObject.FindGameObjectWithTag("Player");
+        followTarget = true;
+    }
+
+    public void FollowTarget(GameObject target)
+    {
+        this.target = target;
         followTarget = true;
     }
 	
